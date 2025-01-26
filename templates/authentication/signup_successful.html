@@ -1,0 +1,13 @@
+{% extends 'layouts/base-fullscreen.html' %}
+{% block title %}Signup Successful{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/authentication/styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="session-container">
+    <h2>Signed up Successfully!</h2>
+    <p>Please click below to login.</p>
+    <a href="{% url 'login' %}" class="btn">Login</a>
+</div>
+{% endblock %}

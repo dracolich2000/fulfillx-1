@@ -1,0 +1,99 @@
+{% extends 'layouts/user-base.html' %}
+
+{% block title %} View Product {% endblock %}
+
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/user_panel/styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="product-container">
+    <!-- Product Gallery -->
+    <div class="product-gallery">
+        <div class="main-image">
+            <img id="mainImage" src="{{ product.images.first.image_url }}" alt="{{ product.name }}">
+        </div>
+        <div class="thumbnail-gallery">
+            {% for image in product.images.all %}
+            <img src="{{ image.image_url }}" alt="Thumbnail {{ forloop.counter }}" onclick="switchImage('{{ image.image_url }}')">
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Product Details -->
+    <div class="product-details">
+        <!-- Product Title and Price -->
+        <div class="product-info">
+            <h1 class="product-title">{{ product.name }}</h1>
+            <p class="product-price">₹{{ product.price }}</p>
+        </div>
+        
+        <!-- Product Description -->
+        <div class="product-description-column">
+            <fieldset>
+                <legend>Product Description:</legend>
+                <p>{{ product.description }}</p>
+            </fieldset>
+        </div>
+    
+        <!-- Action Buttons -->
+        <div class="actions">
+            <button class="add-to-import-list">Add to Import List</button>
+            <button class="push-to-shopify" 
+                data-product-id="{{ product.id }}" 
+                data-product-image="{{ product.images.first.image.url }}" 
+                data-product-name="{{ product.name }}" 
+                data-product-description="{{ product.description }}"
+                data-product-price="{{ product.price }}" 
+                onclick="openShopifyModal(this)">
+                Push to Shopify
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="shopifyModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeShopifyModal()">&times;</span>
+        <h2>Push to Shopify</h2>
+        <form id="shopifyForm" class="modal-form" method="POST" action="{% url 'push_to_shopify' %}">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" id="product_id">
+
+            <!-- Product Details -->
+            <div class="product-details-section">
+                <img id="productImage" src="{{ product.images.first.image_url }}" alt="{{ product.name }}" class="product-image-modal">
+                <h3 id="productName">{{ product.name }}</h3>
+                <p id="productDescription">{{ product.description }}</p>
+            </div>
+
+            <div class="store-selection-section">
+                <label for="storeSelect">Select Store:</label>
+                <select name="store" id="storeSelect" required>
+                    {% for store in stores %}
+                        <option value="{{store.shop_name}}">{{store.shop_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Pricing Section -->
+            <div class="pricing-section">
+                <label for="productPrice">Set Price (₹):</label>
+                <input type="number" name="price" id="productPrice" value="{{ product.price }}" required>
+                <br>
+                <p id="margin-display">Margin: ₹0.00</p>
+            </div>
+
+            <br><br>
+            <button type="submit" class="btn btn-success">Push to Shopify</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="/static/js/user_panel/script.js"></script>
+{% endblock %}

@@ -1,0 +1,247 @@
+{% extends 'layouts/staff-base.html' %}
+
+{% block title %} Sourcing Requests {% endblock %}
+
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/staff_panel/styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="container" hidden>
+    <div class="tabs">
+        <div class="tab" data-tab="pending">Pending</div>
+        <div class="tab" data-tab="in_progress">In Progress</div>
+        <div class="tab" data-tab="completed">Completed</div>
+        <div class="tab" data-tab="rejected">Rejected</div>
+    </div>
+
+    <div class="tab-content active" id="pending">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product Details</th>
+                    <th>Product URL</th>
+                    <th>Description</th>
+                    <th>Added By</th>
+                    <th>created at</th>
+                    <th>Status</th>
+                    <th>Review</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in pending_requests %}
+                <tr>
+                    <td>{{req.id}}</td>
+                    <td>
+                        <div class="product-details">
+                            {% with req.image as img %}
+                                {% if img %}
+                                    <img class='product-img' src="{{ img.url }}" alt="{{ req.name }}">
+                                {% else %}
+                                    No Image
+                                {% endif %}
+                            {% endwith %}
+                            <span>{{ req.name }}</span>
+                        </div>
+                    </td>
+                    <td><a href="{{ req.link }}" target="_blank">View Product</a></td>
+                    <td>{{req.description}}</td>
+                    <td>{{req.added_by}}</td>
+                    <td>{{req.created_at}}</td>
+                    <td>{{ req.status }}</td>
+                    <td>{{ req.review }}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="view" onclick="openSourcingForm('{{ req.id }}')">Update Status</button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-content" id="in_progress">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product Details</th>
+                    <th>Product URL</th>
+                    <th>Description</th>
+                    <th>Added By</th>
+                    <th>created at</th>
+                    <th>Status</th>
+                    <th>Review</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in in_progress_requests %}
+                <tr>
+                    <td>{{req.id}}</td>
+                    <td>
+                        <div class="product-details">
+                            {% with req.image as img %}
+                                {% if img %}
+                                    <img class='product-img' src="{{ img.url }}" alt="{{ req.name }}">
+                                {% else %}
+                                    No Image
+                                {% endif %}
+                            {% endwith %}
+                            <span>{{ req.name }}</span>
+                        </div>
+                    </td>
+                    <td><a href="{{ req.link }}" target="_blank">View Product</a></td>
+                    <td>{{req.description}}</td>
+                    <td>{{req.added_by}}</td>
+                    <td>{{req.created_at}}</td>
+                    <td>{{ req.status }}</td>
+                    <td>{{ req.review }}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="view" onclick="openSourcingForm('{{ req.id }}')">Update Status</button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-content" id="completed">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product Details</th>
+                    <th>Product URL</th>
+                    <th>Description</th>
+                    <th>Added By</th>
+                    <th>created at</th>
+                    <th>Status</th>
+                    <th>Review</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in completed_requests %}
+                <tr>
+                    <td>{{req.id}}</td>
+                    <td>
+                        <div class="product-details">
+                            {% with req.image as img %}
+                                {% if img %}
+                                    <img class='product-img' src="{{ img.url }}" alt="{{ req.name }}">
+                                {% else %}
+                                    No Image
+                                {% endif %}
+                            {% endwith %}
+                            <span>{{ req.name }}</span>
+                        </div>
+                    </td>
+                    <td><a href="{{ req.link }}" target="_blank">View Product</a></td>
+                    <td>{{req.description}}</td>
+                    <td>{{req.added_by}}</td>
+                    <td>{{req.created_at}}</td>
+                    <td>{{ req.status }}</td>
+                    <td>{{ req.review }}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="view" onclick="openSourcingForm('{{ req.id }}')">Update Status</button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-content" id="rejected">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product Details</th>
+                    <th>Product URL</th>
+                    <th>Description</th>
+                    <th>Added By</th>
+                    <th>created at</th>
+                    <th>Status</th>
+                    <th>Review</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in all_requests %}
+                <tr>
+                    <td>{{req.id}}</td>
+                    <td>
+                        <div class="product-details">
+                            {% with req.image as img %}
+                                {% if img %}
+                                    <img class='product-img' src="{{ img.url }}" alt="{{ req.name }}">
+                                {% else %}
+                                    No Image
+                                {% endif %}
+                            {% endwith %}
+                            <span>{{ req.name }}</span>
+                        </div>
+                    </td>
+                    <td><a href="{{ req.link }}" target="_blank">View Product</a></td>
+                    <td>{{req.description}}</td>
+                    <td>{{req.added_by}}</td>
+                    <td>{{req.created_at}}</td>
+                    <td>{{ req.status }}</td>
+                    <td>{{ req.review }}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="view" onclick="openSourcingForm('{{ req.id }}')">Update Status</button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="SourcingModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeSourcingForm()">&times;</span>
+        <h2>Update Sourcing Request Status</h2>
+        <form id="SourcingForm" class='modal-form' method="POST" action="{% url 'update_sourcing_req_status' %}">
+            {% csrf_token %}
+            <!-- Hidden field to store the request ID -->
+            <input type="hidden" name="request_id" id="request_id">
+
+            <!-- Dropdown for status selection -->
+            <label for="status">Select Status:</label>
+            <select name="status" id="status" required>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+            <br><br>
+
+            <!-- Textarea for review -->
+            <label for="review">Add Review:</label>
+            <textarea name="review" id="review" rows="3" placeholder="Write your review here..." required></textarea>
+            <br><br>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-success">Update</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="/static/js/staff_panel/script.js"></script>
+{% endblock %}

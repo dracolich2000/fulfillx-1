@@ -1,0 +1,136 @@
+{% extends 'layouts/admin-base.html' %}
+
+{% block title %} Users {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/admin_panel/styles.css">
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="container">
+    <h1>Users Management</h1>
+
+    <div class="tabs">
+        <div class="tab active" data-tab="staff">Staff</div>
+        <div class="tab" data-tab="vendor">Vendor</div>
+        <div class="tab" data-tab="user">User</div>
+    </div>
+
+    <div id="staff" class="tab-content active">
+        <h2>Staff Users</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in staff %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.email}}</td>
+                    <td>
+                        <a class="view-btn" href="{% url 'user_details' user.id %}">View</a>
+                        <button class="change-role-btn" onclick="openRoleForm('{{ user.id }}')">Change Role</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="vendor" class="tab-content">
+        <h2>Vendor Users</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vendor in vendors %}
+                <tr>
+                    <td>{{vendor.id}}</td>
+                    <td>{{vendor.username}}</td>
+                    <td>{{vendor.email}}</td>
+                    <td>
+                        <a class="view-btn" href="{% url 'user_details' vendor.id %}">View</a>
+                        <button class="change-role-btn" onclick="openRoleForm('{{ vendor.id }}')">Change Role</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="user" class="tab-content">
+        <h2>General Users</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.email}}</td>
+                    <td>
+                        <a class="view-btn" href="{% url 'user_details' user.id %}">View</a>
+                        <button class="change-role-btn" onclick="openRoleForm('{{ user.id }}')">Change Role</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="roleModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeRoleForm()">&times;</span>
+        <h2>Assign Role</h2>
+        <form id="roleForm" class='modal-form' method="POST" action="{% url 'assign_role' %}">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" id="user_id">
+            <label for="role">Select Role:</label>
+            <select name="role" id="role" required>
+                <option value="User">User</option>
+                <option value="Vendor">Vendor</option>
+                <option value="Staff">Staff</option>
+            </select>
+            <br><br>
+            <button type="submit" class="btn btn-success">Assign</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+<!-- Specific JS goes HERE --> 
+{% block js %}
+<script src="/static/js/admin_panel/script.js"></script>
+{% endblock %}

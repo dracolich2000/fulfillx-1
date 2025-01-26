@@ -1,0 +1,13 @@
+{% extends 'layouts/base-fullscreen.html' %}
+{% block title %}Session Expired{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/authentication/styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="session-container">
+    <h2>Session Expired</h2>
+    <p>Your session has expired. Please click below to log in again.</p>
+    <a href="{% url 'login' %}" class="btn">Login Again</a>
+</div>
+{% endblock %}

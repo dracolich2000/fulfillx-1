@@ -1,0 +1,56 @@
+{% extends 'layouts/admin-base.html' %}
+
+{% block title %} User Details {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/admin_panel/styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>User Details</h1>
+
+    <div class="user-info">
+        <div class="user-info-item">
+            <strong>Username:</strong> {{ user.username }}
+        </div>
+        <div class="user-info-item">
+            <strong>First Name:</strong> {{ user.first_name }}
+        </div>
+        <div class="user-info-item">
+            <strong>Last Name:</strong> {{ user.last_name }}
+        </div>
+        <div class="user-info-item">
+            <strong>Email:</strong> {{ user.email }}
+        </div>
+        <div class="user-info-item">
+            <strong>Role:</strong> {{ user.role }}
+        </div>
+        <div class="user-info-item">
+            <strong>Last Login:</strong> {{ user.last_login }}
+        </div>
+        <div class="user-info-item">
+            <strong>Date Joined:</strong> {{ user.date_joined }}
+        </div>
+        <div class="user-info-item">
+            <strong>Active:</strong> {% if user.is_active %} Yes {% else %} No {% endif %}
+        </div>
+        <div class="user-info-item">
+            <strong>Staff Member:</strong> {% if user.is_Staff %} Yes {% else %} No {% endif %}
+        </div>
+        <div class="user-info-item">
+            <strong>Superuser:</strong> {% if user.is_superuser %} Yes {% else %} No {% endif %}
+        </div>
+    </div>
+
+    <div class="back-button">
+        <a href="{% url 'users' %}">Back to User List</a>
+    </div>
+</div>
+{% endblock %}
+
+<!-- Specific JS goes HERE --> 
+{% block js %}
+
+{% endblock %}

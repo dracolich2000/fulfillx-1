@@ -1,0 +1,79 @@
+{% extends 'layouts/vendor-base.html' %}
+
+{% block title %} Products {% endblock %}
+
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/vendor_panel/styles.css">
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="product-container">
+    <h1>Products</h1>
+
+    <div class="products-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Details</th>
+                    <th>Inventory</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>
+                        <div class="product-details">
+                            {% if product.images.exists %}
+                                <img class='product-img' src="{{ product.images.first.image_url }}" alt="{{ product.name }}">
+                            {% else %}
+                                No Image
+                            {% endif %}
+                            <span>{{ product.name }}</span>
+                        </div>
+                    </td>
+                    <td>{{ product.inventory }}</td>
+                    <td>
+                        <button class="update-inventory-btn" data-product-id="{{product.id}}" data-product-inventory="{{product.inventory}}" onclick="openUpdateInventoryModal(this)">Update Inventory</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal for Updating Inventory -->
+<div id="updateInventoryModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Update Inventory</h2>
+        <form id="inventoryForm" class='modal-form' method="POST" action="{% url 'vendor_update_inventory' %}">
+            {% csrf_token %}
+            <input type="hidden" id="product_id" name="product_id">
+            <label for="inventory">Enter quantity:</label>
+            <input type="number" id="product_inventory" name="product_inventory" value="{{ product.inventory }}" required min="0">
+            <br><br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="/static/js/vendor_panel/script.js"></script>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'layouts/user-base.html' %}
+
+{% block title %} Manage Store {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/user_panel/styles.css">
+{% endblock %}
+
+{% block content %}
+
+    <div class="link-store-container">
+        <button id="openModalBtn">Link New Shopify Store</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Store Details</th>
+                <th>Store Platform</th>
+                <th>Linked On</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shop in shops %}
+            <tr>
+                <td>{{ shop.id }}</td>
+                <td>{{shop.shop_name}}</td>
+                <td>{{ shop.shop_platform }}</td>
+                <td>{{ shop.linked_on }}</td>
+                <td>
+                    <button class="btn update-price">Edit</button>
+                    <a class="btn delete" href="{% url 'delete_store' shop.id %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div id="shopifyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModalBtn">&times;</span>
+            <form method="post" class='modal-form' action="{% url 'shopify_auth' %}">
+                {% csrf_token %}
+                <label for="shop">Enter your Shopify store URL:</label>
+                <input type="text" name="shop" id="shop" placeholder="mystore.myshopify.com" required>
+                <button class="link-store-btn" type="submit">Link New Shopify Store</button>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block js %}
+<script src="/static/js/user_panel/script.js"></script>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'layouts/staff-base.html' %}
+
+{% block title %} Update Product {% endblock %}
+
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/staff_panel/styles.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="update-product-container">
+    <h1>Update Product</h1>
+    <form method="POST" action="{% url 'update_product' product.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" name="name" value="{{ product.name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price (₹)</label>
+            <input type="number" name="price" id="price" value="{{ product.price }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" value="{{ product.category }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required>{{ product.description }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="inventory">Inventory:</label>
+            <input type="number" id="inventory" name="inventory" value="{{ product.inventory }}" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label>Current Images:</label>
+            <div class="image-preview">
+                {% for image in product.images.all %}
+                    <div class="image-item" id="image-{{ image.id }}">
+                        <img src="{{ image.image_url }}" alt="Product Image">
+                        <button type="button" onclick="deleteImage('{{ image.id }}')" class="delete-button"><i class="fas fa-trash-alt"></i></button>
+                        <input type="checkbox" name="delete_images" value="{{ image.id }}" class="delete-image-checkbox">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="new_image_urls">Enter Image URLs (separated by commas):</label>
+            <textarea id="new_image_urls" name="new_image_urls" rows="5" cols="50" placeholder="link_1,link_2,link_3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="vendor">Vendor:</label>
+            <select name="vendor" id="vendor" required>
+                <option value="{{product.vendor}}">{{ product.vendor }}</option>
+                {% for vendor in vendors %}
+                    <option value="{{vendor.username}}">{{vendor.username}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Update Product</button>
+        <a href="{% url 'staff_products' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="/static/js/staff_panel/script.js"></script>
+{% endblock %}

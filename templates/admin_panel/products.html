@@ -1,0 +1,62 @@
+{% extends 'layouts/admin-base.html' %}
+
+{% block title %} Products {% endblock %}
+
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/admin_panel/styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="products-container">
+    <div class="header">
+        <h1>Products</h1>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Details</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Inventory</th>
+                <th>Created By</th>
+                <th>Created At</th>
+                <th>Vendor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>
+                    <div class="product-details">
+                        {% if product.images.exists %}
+                            <img class='product-img' src="{{ product.images.first.image_url }}" alt="{{ product.name }}">
+                        {% else %}
+                            No Image
+                        {% endif %}
+                        <span>{{ product.name }}</span>
+                    </div>
+                </td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.inventory }}</td>
+                <td>{{ product.created_by }}</td>
+                <td>{{ product.created_at|date:"Y-m-d H:i" }}</td>
+                <td>{{ product.vendor }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align:center;">No Products Available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+
+{% block js %}
+
+{% endblock %}

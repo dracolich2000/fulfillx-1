@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FulfillX - Dropshipping Made Easy</title>
+  <link rel="stylesheet" href="/static/css/fulfillX/styles.css">
+  <script defer src="/static/js/fulfillX/script.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="container">
+      <h1>FulfillX</h1>
+      <nav>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="{% url 'login' %}" class="btn-get-started">Login</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h2>Your Trusted Dropshipping Partner</h2>
+      <p>Streamline your e-commerce business with FulfillX's comprehensive dropshipping solutions.</p>
+      <a href="{% url 'signup' %}" class="btn">Sing up for free</a>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="services">
+    <div class="container">
+      <h2>Our Services</h2>
+      <div class="service">
+        <i class="fas fa-box-open"></i>
+        <h3>Product Sourcing</h3>
+        <p>Get access to a wide range of products tailored for your store.</p>
+      </div>
+      <div class="service">
+        <i class="fas fa-shipping-fast"></i>
+        <h3>Fast Shipping</h3>
+        <p>We ensure quick and reliable delivery to your customers.</p>
+      </div>
+      <div class="service">
+        <i class="fas fa-tags"></i>
+        <h3>Private Labeling</h3>
+        <p>Personalize your products with custom branding and packaging.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="container">
+      <h2>Why Choose FulfillX?</h2>
+      <ul>
+        <li><i class="fas fa-check-circle"></i> 24/7 Customer Support</li>
+        <li><i class="fas fa-check-circle"></i> Competitive Pricing</li>
+        <li><i class="fas fa-check-circle"></i> Seamless Integration with Platforms</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="testimonials">
+    <div class="container">
+      <h2>What Our Clients Say</h2>
+      <div class="testimonial">
+        <p>"FulfillX made it easy to manage my store. Their fast shipping is a game-changer!"</p>
+        <h4>- Alex Smith</h4>
+      </div>
+      <div class="testimonial">
+        <p>"I love the product sourcing service. It saves me so much time."</p>
+        <h4>- Maria Lee</h4>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 FulfillX. All Rights Reserved.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

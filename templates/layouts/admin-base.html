@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}default{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/includes/admin-sidebar.css">
+    <link rel="stylesheet" href="/static/css/includes/messages.css">
+    <link rel="stylesheet" href="/static/css/includes/table.css">
+    <link rel="stylesheet" href="/static/css/includes/tabs.css">
+    <link rel="stylesheet" href="/static/css/includes/modal.css">
+    <link rel="stylesheet" href="/static/css/layouts/admin-base.css">
+    {% block stylesheet %} 
+    
+    {% endblock %}
+</head>
+<body>
+{% include 'includes/admin-sidebar.html' %}
+
+
+<div class="main">
+    {% block content %}
+
+    {% endblock %}
+</div>    
+</body>
+<script src="/static/js/inlcudes/script.js"></script>
+{% block js %}
+
+{% endblock %}
+</html>

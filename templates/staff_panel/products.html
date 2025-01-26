@@ -1,0 +1,121 @@
+{% extends 'layouts/staff-base.html' %}
+
+{% block title %} Products {% endblock %}
+
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/staff_panel/styles.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="product-container" hidden>
+    <h1>Products Management</h1>
+    <div class="tabs">
+        <div class="tab" data-tab="add-product">Add Product</div>
+        <div class="tab" data-tab="existing-products">Existing Products</div>
+    </div>
+
+    <div id="add-product" class="tab-content active">
+        
+        <button type="button" class="btn btn-primary" onclick="openCsvForm()">
+            Upload Products via CSV
+        </button>
+
+        <h2>Add New Product</h2>
+        <form id="addProductForm" method="POST" enctype="multipart/form-data" action="{% url 'add_product' %}">  
+            {% csrf_token %}
+            <label for="product_name">Product Name:</label>
+            <input type="text" id="product_name" name="product_name" required>
+
+            <label for="price">Price (₹)</label>
+            <input type="number" name="price" id="price" placeholder="Enter product price" required>
+
+            <label for="image_urls">Enter Image URLs (separated by commas):</label>
+            <textarea id="image_urls" name="image_urls" rows="5" cols="50" placeholder="link_1,link_2,link_3" required></textarea>
+
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required>
+
+            <label for="product_description">Product Description:</label>
+            <textarea id="product_description" name="product_description" rows="4" required></textarea>
+
+            <label for="vendor">Vendor:</label>
+            <select name="vendor" id="vendor" required>
+                <option value="">Select</option>
+                {% for vendor in vendors %}
+                    <option value="{{vendor.username}}">{{vendor.username}}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+    </div>
+
+    <div id="existing-products" class="tab-content">
+        <h2>Existing Products</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Detail</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>
+                        <div class="product-details">
+                            {% if product.images.exists %}
+                                <img class='product-img' src="{{ product.images.first.image_url }}" alt="{{ product.name }}">
+                            {% else %}
+                                No Image
+                            {% endif %}
+                            <span>{{ product.name }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <a href="{% url 'update_product' product.id %}" class="btn btn-success">Update</a>
+                        <a href="{% url 'delete_product' product.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="csvModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCsvForm()">&times;</span>
+        <h2>Upload Csv File</h2>
+        <form id="uploadCsvForm" method="POST" enctype="multipart/form-data" action="{% url 'upload_products_csv' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="csv_file">Select CSV File:</label>
+                <input type="file" class="form-control" id="csv_file" name="csv_file" accept=".csv" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="/static/js/staff_panel/script.js"></script>
+{% endblock %}
+

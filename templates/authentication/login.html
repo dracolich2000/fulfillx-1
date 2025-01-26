@@ -1,0 +1,33 @@
+{% extends 'layouts/base-fullscreen.html' %}
+{% block title %}Login{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/css/authentication/styles.css">
+{% endblock %}
+
+{% block content %}
+    <main class="main-content">
+        <div class="form-container">
+            <div class="error" id="error-message">
+                {% if error %}
+                    {{ error }}
+                {% endif %}
+            </div>
+            <h2>Login</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <a href="/forgot-password" class="forgot-password">Forgot Password?</a>
+        </div>
+    </main>
+{% endblock %}
+
+{% block js %}
+<script src="/static/js/authentication/script.js"></script>
+{% endblock %}
