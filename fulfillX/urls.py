@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from django.conf import static
+from django.conf.urls.static import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +28,4 @@ urlpatterns = [
     path('',include('admin_panel.urls')),
     path('',include('vendor_panel.urls')),
     path('',include('staff_panel.urls'))
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
