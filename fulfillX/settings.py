@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'admin_panel',
-    'staff',
-    'user',
+    'staff_panel',
+    'user_panel',
+    'vendor_panel',
     'authentication',
 ]
 
@@ -81,10 +82,10 @@ WSGI_APPLICATION = 'fulfillX.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fulfillx_db',   # Replace with your database name
-        'USER': 'fulfillx_db_user',   # Replace with your database user
-        'PASSWORD': 'aCQLMur95ZpF30ZVnXfBkoeNHyH9KSpm',    # Replace with your password
-        'HOST': 'dpg-ctq47qbtq21c739t96i0-a.oregon-postgres.render.com',            # Or the host of your PostgreSQL server
+        'NAME': 'fulfillx_db_p5rb',   # Replace with your database name
+        'USER': 'fulfillx_db_p5rb_user',   # Replace with your database user
+        'PASSWORD': 'xhsLJY0Oigudt4Ey3PzvypS4gjDofRxW',    # Replace with your password
+        'HOST': 'dpg-cu648s5svqrc738f9n10-a.oregon-postgres.render.com',            # Or the host of your PostgreSQL server
         'PORT': '5432',                 # Default PostgreSQL port
     }
 }
