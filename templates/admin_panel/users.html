@@ -49,6 +49,10 @@
                         <button class="change-role-btn" onclick="openRoleForm('{{ user.id }}')">Change Role</button>
                     </td>
                 </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">No Users Found</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -76,6 +80,10 @@
                         <button class="change-role-btn" onclick="openRoleForm('{{ vendor.id }}')">Change Role</button>
                     </td>
                 </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">No Users Found</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -102,6 +110,10 @@
                         <a class="view-btn" href="{% url 'user_details' user.id %}">View</a>
                         <button class="change-role-btn" onclick="openRoleForm('{{ user.id }}')">Change Role</button>
                     </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">No Users Found</td>
                 </tr>
                 {% endfor %}
             </tbody>

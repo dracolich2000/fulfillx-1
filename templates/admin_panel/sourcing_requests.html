@@ -57,6 +57,10 @@
                     <td>{{req.last_updated}}</td>
                     <td>{{req.updated_by}}</td>
                 </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10" style="text-align: center;">No Requests Found</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -102,6 +106,10 @@
                     <td>{{ req.review }}</td>
                     <td>{{req.last_updated}}</td>
                     <td>{{req.updated_by}}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10" style="text-align: center;">No Requests Found</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -149,6 +157,10 @@
                     <td>{{req.last_updated}}</td>
                     <td>{{req.updated_by}}</td>
                 </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10" style="text-align: center;">No Requests Found</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -194,6 +206,10 @@
                     <td>{{ req.review }}</td>
                     <td>{{req.last_updated}}</td>
                     <td>{{req.updated_by}}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10" style="text-align: center;">No Requests Found</td>
                 </tr>
                 {% endfor %}
             </tbody>
