@@ -9,6 +9,7 @@ from django.conf import settings
 from authentication.models import StaffUser
 from fulfillX.access_control_decorater import role_required
 import logging
+from decimal import Decimal
 
 # Create your views here.
 @role_required('Staff')
@@ -78,33 +79,48 @@ def upload_products_csv(request):
 
         file_data = csv_file.read().decode('utf-8')
         csv_data = csv.reader(file_data.splitlines())
+        try:
+            next(csv_data)
+            for line_number, row in enumerate(csv_data, start=1):
+                if len(row) != 6:
+                    messages.error(request, f"Invalid row format line [{line_number}]: {row}. It must have 6 columns.")
+                    return redirect('staff_products')
+                
+                name, price, category, description, vendor_username, image_urls = row
+                
+                try:
+                    vendor = StaffUser.objects.get(username=vendor_username,role='Vendor')
+                except StaffUser.DoesNotExist:
+                    messages.error(request,f'Line {line_number}: Vendor "{vendor_username}" does not exist. Please check your file and try again.')
+                    redirect('staff_products')
 
-        for line_number, row in enumerate(csv_data, start=1):
-            name, price, category, description, vendor_username, image_urls = row
-            try:
-                vendor = StaffUser.objects.get(username=vendor_username,role='Vendor')
-            
-            except StaffUser.DoesNotExist:
-                messages.error(request,f'Line {line_number}: Vendor "{vendor_username}" does not exist. Please check your file and try again.')
-                redirect('staff_products')
+                try:
+                    price = Decimal(price.strip())  # Ensure it's a valid decimal
+                except ValueError:
+                    messages.error(request, f'Error on line {line_number}: Price "{price}" is not a valid decimal number.')
+                    return redirect('staff_products')
 
-            product = Products.objects.create(
-                name=name,
-                price=price,
-                category=category,
-                description=description,
-                vendor=vendor
-            )
-            urls_list = image_urls.replace('\n', ',').replace(' ', ',').split(',')
-            urls_list = [url.strip() for url in urls_list if url.strip()]
+                if vendor:
+                    product = Products.objects.create(
+                        name=name,
+                        price=price,
+                        category=category,
+                        description=description,
+                        vendor=vendor_username
+                    )
+                    urls_list = image_urls.replace('|', ',').replace(' ', ',').split(',')
+                    urls_list = [url.strip() for url in urls_list if url.strip()]
 
-            images = []
-            for url in urls_list:
-                image= ProductImage.objects.create(image_url=url)
-                images.append(image)
-            product.images.add(*images)
+                    images = []
+                    for url in urls_list:
+                        image= ProductImage.objects.create(image_url=url)
+                        images.append(image)
+                    product.images.add(*images)
 
-        messages.success(request, 'Products uploaded successfully.')
+            messages.success(request, 'Products uploaded successfully.')
+        except Exception as e:
+            logging.error(f'Error occured:{str(e)}')
+            messages.error(request,'Something went wrong! Please try again.')
         return redirect('staff_products')
 
 
