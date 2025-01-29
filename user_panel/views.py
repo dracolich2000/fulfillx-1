@@ -213,7 +213,7 @@ def push_to_shopify(request):
                 ],
                 "images": [
                     {
-                        "src": image.image.url  # Ensure the image URL is valid
+                        "src": image.image_url  # Ensure the image URL is valid
                     } for image in product.images.all()
                 ]
             }
