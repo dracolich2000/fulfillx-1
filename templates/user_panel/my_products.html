@@ -36,7 +36,7 @@
                 <td>{{product.shopify_product_id}}</td>
                 <td>
                     <div class="product-details">
-                        {% if product.images.exists %}
+                        {% if product.product.images.exists %}
                             <img class='product-img' src="{{ product.product.images.first.image_url }}" alt="{{ product.product.name }}">
                         {% else %}
                             No Image
