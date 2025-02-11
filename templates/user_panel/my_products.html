@@ -20,13 +20,15 @@
             </tr>
         </thead>
         <tbody>
+            {% for product in products %}
             <tr>
-                <td>1</td>
-                <td><img src="placeholder.jpg" alt="Product" width="60">Sample Product</td>
-                <td>500</td>
-                <td>700</td>
-                <td>100</td>
+                <td>{{product.id}}</td>
+                <td>{{product.img}} {{product.name}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.Selling_price}}</td>
+                <td>{{product.inventory}}</td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
 

@@ -13,39 +13,11 @@
     z-index: 100;
 }
 
-.search-container {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    gap: 10px;
-}
-
-.search-bar {
-    padding: 10px;
-    font-size: 16px;
-    width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.search-btn {
-    padding: 10px 15px;
-    border: none;
-    background-color: rgb(143, 214, 36);
-    color: white;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.search-btn:hover {
-    background-color: rgb(120, 180, 30);
-}
-
 .header-icons {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-left: auto;
 }
 
 .header-icons img {

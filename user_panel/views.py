@@ -9,7 +9,7 @@ from django.conf import settings
 from django.http import HttpResponse
 import urllib.parse
 import requests
-from .models import Shop, ShopifyOrder, ShopifyOrderItem
+from .models import Shop, ShopifyOrder, ShopifyOrderItem, MyProducts
 from django.core.exceptions import ObjectDoesNotExist
 import logging
 
@@ -224,6 +224,18 @@ def push_to_shopify(request):
 
         # Handle response
         if response.status_code == 201:
+            response_data = response.json()
+            shopify_product_id = response_data['product']['id']
+            
+            MyProducts.objects.create(
+                product=product,
+                fulfillx_price=product.price,  # Assuming FulFillX price is the same as selling price
+                selling_price=product_price,
+                inventory=0,  # Default inventory as 0
+                shopify_product_id=shopify_product_id,
+                pushed_to_shopify=True
+            )
+            
             messages.success(request, "Product pushed to Shopify successfully!")
         else:
             error_msg = response.json()  # Get detailed error message from Shopify API
