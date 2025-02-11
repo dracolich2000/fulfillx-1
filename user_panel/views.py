@@ -236,9 +236,9 @@ def push_to_shopify(request):
             
             MyProducts.objects.create(
                 product=product,
-                fulfillx_price=product.price,  # Assuming FulFillX price is the same as selling price
+                fulfillx_price=product.price,
                 selling_price=product_price,
-                inventory=0,  # Default inventory as 0
+                inventory=0,
                 shopify_product_id=shopify_product_id,
                 pushed_to_shopify=True,
                 shop=store
