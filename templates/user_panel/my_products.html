@@ -8,6 +8,17 @@
 {% endblock %}
 
 {% block content %}
+<form method="GET">
+    <label for="store">Select Store:</label>
+    <select name="store" id="store" onchange="this.form.submit()">
+        <option value="">All Stores</option>
+        {% for shop in shops %}
+            <option value="{{ shop.id }}" {% if request.GET.store == shop.id|stringformat:"s" %}selected{% endif %}>
+                {{ shop.shop_name }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
 
     <table>
         <thead>

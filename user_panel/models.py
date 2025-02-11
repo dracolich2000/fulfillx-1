@@ -33,3 +33,4 @@ class MyProducts(models.Model):
     inventory = models.IntegerField(default=0)
     shopify_product_id = models.CharField(max_length=255, blank=True, null=True)  # Shopify ID after pushing
     pushed_to_shopify = models.BooleanField(default=False)
+    shop = models.ForeignKey('Shop', on_delete=models.CASCADE, blank=True,null=True)

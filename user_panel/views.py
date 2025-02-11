@@ -44,15 +44,16 @@ def import_list(request):
 @never_cache
 def manage_store(request):
     user = request.user.username
-    #shops = Shop.objects.filter(linked_by=user)
-    shops = Shop.objects.all()
+    shops = Shop.objects.filter(linked_by=user)
     return render(request, 'user_panel/manage_store.html',{'shops':shops})
 
 @role_required('User')
 @login_required(login_url='login')
 @never_cache
 def my_products(request):
-    return render(request, 'user_panel/my_products.html')
+    user = request.user.username
+    shops = Shop.objects.filter(linked_by=user)
+    return render(request, 'user_panel/my_products.html',{'shops':shops})
 
 @role_required('User')
 @login_required(login_url='login')
@@ -233,7 +234,8 @@ def push_to_shopify(request):
                 selling_price=product_price,
                 inventory=0,  # Default inventory as 0
                 shopify_product_id=shopify_product_id,
-                pushed_to_shopify=True
+                pushed_to_shopify=True,
+                shop=store
             )
             
             messages.success(request, "Product pushed to Shopify successfully!")
