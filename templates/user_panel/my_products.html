@@ -34,10 +34,23 @@
             {% for product in products %}
             <tr>
                 <td>{{product.id}}</td>
-                <td>{{product.img}} {{product.name}}</td>
+                <td>
+                    <div class="product-details">
+                        {% if product.images.exists %}
+                            <img class='product-img' src="{{ product.images.first.image_url }}" alt="{{ product.name }}">
+                        {% else %}
+                            No Image
+                        {% endif %}
+                        <span>{{ product.name }}</span>
+                    </div>
+                </td>
                 <td>{{product.price}}</td>
                 <td>{{product.Selling_price}}</td>
                 <td>{{product.inventory}}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No products found.</td>
             </tr>
             {% endfor %}
         </tbody>

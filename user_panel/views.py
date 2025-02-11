@@ -53,7 +53,13 @@ def manage_store(request):
 def my_products(request):
     user = request.user.username
     shops = Shop.objects.filter(linked_by=user)
-    return render(request, 'user_panel/my_products.html',{'shops':shops})
+    store_id = request.GET.get('store')
+    if store_id:
+        products = MyProducts.objects.filter(shop_id=store_id)
+    else:
+        products = MyProducts.objects.filter(shop__in=shops)
+    return render(request, 'user_panel/my_products.html',{'shops':shops,
+                                                          'products':products})
 
 @role_required('User')
 @login_required(login_url='login')
