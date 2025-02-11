@@ -24,13 +24,13 @@ class ShopifyOrderItem(models.Model):
     order = models.ForeignKey(ShopifyOrder, related_name='items', on_delete=models.CASCADE)
     product_name = models.CharField(max_length=255)
     quantity = models.PositiveIntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)  # Price of individual item
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
 class MyProducts(models.Model):
     product = models.OneToOneField('staff_panel.Products', on_delete=models.CASCADE, primary_key=True)
-    fulfillx_price = models.DecimalField(max_digits=10, decimal_places=2)  # Storing FulFillX price
+    fulfillx_price = models.DecimalField(max_digits=10, decimal_places=2)
     selling_price = models.DecimalField(max_digits=10, decimal_places=2)
     inventory = models.IntegerField(default=0)
-    shopify_product_id = models.CharField(max_length=255, blank=True, null=True)  # Shopify ID after pushing
+    shopify_product_id = models.CharField(max_length=255, blank=True, null=True)
     pushed_to_shopify = models.BooleanField(default=False)
     shop = models.ForeignKey('Shop', on_delete=models.CASCADE, blank=True,null=True)

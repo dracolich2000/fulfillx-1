@@ -23,7 +23,6 @@
     <table>
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Shopify Product Id</th>
                 <th>Product Details</th>
                 <th>FulFillX Price</th>
@@ -34,7 +33,6 @@
         <tbody>
             {% for product in products %}
             <tr>
-                <td>{{product.id}}</td>
                 <td>{{product.shopify_product_id}}</td>
                 <td>
                     <div class="product-details">
@@ -47,7 +45,7 @@
                     </div>
                 </td>
                 <td>{{product.fulfillx_price}}</td>
-                <td>{{product.Selling_price}}</td>
+                <td>{{product.selling_price}}</td>
                 <td>{{product.inventory}}</td>
             </tr>
             {% empty %}
