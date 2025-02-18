@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'fulfillX.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fulfillx_db_p5rb',   # Replace with your database name
-        'USER': 'fulfillx_db_p5rb_user',   # Replace with your database user
-        'PASSWORD': 'xhsLJY0Oigudt4Ey3PzvypS4gjDofRxW',    # Replace with your password
-        'HOST': 'dpg-cu648s5svqrc738f9n10-a.oregon-postgres.render.com',            # Or the host of your PostgreSQL server
+        'NAME': 'fulfillx_db_9sxl',   # Replace with your database name
+        'USER': 'fulfillx_db_9sxl_user',   # Replace with your database user
+        'PASSWORD': 'XuLrQ6cXTDYXfzN6FQaEXysPexkVeKVJ',    # Replace with your password
+        'HOST': 'dpg-cuqhmdhopnds73bn36v0-a.oregon-postgres.render.com',            # Or the host of your PostgreSQL server
         'PORT': '5432',                 # Default PostgreSQL port
     }
 }
