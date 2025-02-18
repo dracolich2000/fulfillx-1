@@ -8,4 +8,6 @@ urlpatterns = [
     path('assign_role/', views.assign_role, name='assign_role'),
     path('admin_products/',views.products,name='admin_products'),
     path('admin_sourcing_requests/',views.sourcing_requests,name='admin_sourcing_requests'),
+    path('admin_orders',views.orders,name='admin_orders'),
+    path('fetch_shopify_orders',views.fetch_and_store_shopify_orders,name='fetch_shopify_orders'),
 ]

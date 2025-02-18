@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}default{% endblock %}</title>
-    <link rel="stylesheet" href="/static/css/includes/sidebar.css">
+    <link rel="stylesheet" href="/static/css/includes/sidebars/user-sidebar.css">
     <link rel="stylesheet" href="/static/css/includes/header.css">
     <link rel="stylesheet" href="/static/css/includes/messages.css">
     <link rel="stylesheet" href="/static/css/includes/table.css">
@@ -20,7 +20,7 @@
     {% endblock %}
 </head>
 <body>
-{% include 'includes/sidebar.html' %}
+{% include 'includes/sidebars/user-sidebar.html' %}
 {% include 'includes/headers/user-header.html' %}
 
 <div class="main">

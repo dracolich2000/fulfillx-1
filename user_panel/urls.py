@@ -18,5 +18,4 @@ urlpatterns = [
     path('pust_to_shopify/',views.push_to_shopify,name='push_to_shopify'),
     path('delete-store/<int:store_id>/', views.delete_store, name='delete_store'),
     path('user_orders/',views.orders,name='user_orders'),
-    path('fetch_shopify_orders',views.fetch_and_store_shopify_orders,name='fetch_shopify_orders')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

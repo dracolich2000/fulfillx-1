@@ -1,8 +1,7 @@
 from django.db import models
 
-# Create your models here.
-
-class Shop(models.Model):
+# store shop data
+class Shop(models.Model): 
     id = models.AutoField(primary_key=True)
     shop_name = models.CharField(max_length=255, null=True,blank=True)
     shop_url = models.URLField(unique=True)
@@ -11,6 +10,7 @@ class Shop(models.Model):
     linked_by = models.CharField(max_length=255,null=True, blank=True)
     linked_on = models.DateTimeField(auto_now_add=True, null=True,blank=True)
 
+# store orders
 class ShopifyOrder(models.Model):
     order_id = models.CharField(max_length=255, unique=True)
     customer = models.CharField(max_length=255, blank=True, null=True)
@@ -19,13 +19,17 @@ class ShopifyOrder(models.Model):
     payment_status = models.CharField(max_length=255, blank=True, null=True)
     fulfillment_status = models.CharField(max_length=255, blank=True, null=True)
     delivery_status = models.CharField(max_length=255, blank=True, null=True)
+    shop = models.ForeignKey('Shop', on_delete=models.SET_NULL, related_name='orders', null=True, blank=True)  # Link order to a shop
 
+# store order items
 class ShopifyOrderItem(models.Model):
     order = models.ForeignKey(ShopifyOrder, related_name='items', on_delete=models.CASCADE)
-    product_name = models.CharField(max_length=255)
+    product = models.ForeignKey('user_panel.MyProducts', on_delete=models.SET_NULL, null=True, blank=True)  # Preserve order if product is deleted
+    product_name = models.CharField(max_length=255)  # Store name to keep history
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
+# store products pushed to shopify
 class MyProducts(models.Model):
     product = models.OneToOneField('staff_panel.Products', on_delete=models.CASCADE, primary_key=True)
     fulfillx_price = models.DecimalField(max_digits=10, decimal_places=2)

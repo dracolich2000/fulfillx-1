@@ -1,0 +1,22 @@
+<div class="sidebar">
+    <div class="logo">
+        <h2>FulFillX</h2>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'usr_dashboard' %}" class="nav-link"><img class="sidebar-img" src="/static/img/includes/sidebar/dashboard.png" alt="dashboard"><span>Dashboard</span></a></li>
+        <li><a href="{% url 'user_sourcing' %}" class="nav-link"><img class="sidebar-img" src="/static/img/includes/sidebar/sourcing.png" alt="sourcing"><span>Sourcing</span></a></li>
+        <li><a href="{% url 'my_products' %}" class="nav-link"><img class="sidebar-img" src="/static/img/includes/sidebar/product.png" alt="product"><span>My Products</span></a></li>
+        <li><a href="{% url 'find_products' %}" class="nav-link"><img class="sidebar-img" src="/static/img/includes/sidebar/find-product.png" alt="product"><span>Find Products</span></a></li>
+        <li><a href="{% url 'custom_products' %}" class="nav-link"><img class="sidebar-img" src="/static/img/includes/sidebar/custom_product.png" alt="product"><span>Custom Products</span></a></li>
+        <li><a href="{% url 'user_orders' %}" class="nav-link"><img class="sidebar-img" src="/static/img/includes/sidebar/orders.png" alt="orders"><span>Orders</span></a></li>
+        <li><a href="#" class="nav-link"><img class="sidebar-img" src="/static/img/includes/sidebar/inventory.png" alt="inventory"><span>Inventory</span></a></li>
+        <li><a href="{% url 'manage_store' %}" class="nav-link"><img class="sidebar-img" src="/static/img/includes/sidebar/store.png" alt="store"><span>Manage Store</span></a></li>
+        <li><a href="#" class="nav-link"><img class="sidebar-img" src="/static/img/includes/sidebar/wallet.png" alt="wallet"><span>My Wallet</span></a></li>
+        <li><a href="#" class="nav-link"><img class="sidebar-img" src="/static/img/includes/sidebar/knowledgehub.png" alt="knowledgehub"><span>Knowledge Hub</span></a></li>
+        <li><a href="#" class="nav-link"><img class="sidebar-img" src="/static/img/includes/sidebar/support.png" alt="support"><span>Support</span></a></li>
+    </ul>
+
+    <div class="logout">
+        <a href="{% url 'logout' %}"><img class="sidebar-img" src="/static/img/includes/sidebar/logout.png" alt="logout"><span>Log out</span></a>
+    </div>
+</div>

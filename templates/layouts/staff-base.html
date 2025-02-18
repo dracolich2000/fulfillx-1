@@ -4,18 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}default{% endblock %}</title>
-    <link rel="stylesheet" href="/static/css/includes/staff-sidebar.css">
+    <link rel="stylesheet" href="/static/css/includes/sidebars/staff-sidebar.css">
     <link rel="stylesheet" href="/static/css/includes/messages.css">
     <link rel="stylesheet" href="/static/css/includes/table.css">
     <link rel="stylesheet" href="/static/css/includes/tabs.css">
     <link rel="stylesheet" href="/static/css/includes/modal.css">
     <link rel="stylesheet" href="/static/css/layouts/staff-base.css">
+    <link rel="stylesheet" href="/static/css/includes/header.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png">
+    <link rel="manifest" href="/static/icons/site.webmanifest">
     {% block stylesheet %} 
     
     {% endblock %}
 </head>
 <body>
-{% include 'includes/staff-sidebar.html' %}
+{% include 'includes/sidebars/staff-sidebar.html' %}
+{% include 'includes/headers/staff-header.html' %}
 
 
 <div class="main">

@@ -10,6 +10,8 @@ from authentication.models import StaffUser
 from fulfillX.access_control_decorater import role_required
 import logging
 from decimal import Decimal
+from user_panel.models import Shop, ShopifyOrder, ShopifyOrderItem, MyProducts
+import requests
 
 # Create your views here.
 @role_required('Staff')
@@ -106,7 +108,8 @@ def upload_products_csv(request):
                         price=price,
                         category=category,
                         description=description,
-                        vendor=vendor_username
+                        vendor=vendor_username,
+                        created_by=request.user.username
                     )
                     urls_list = image_urls.replace('|', ',').replace(' ', ',').split(',')
                     urls_list = [url.strip() for url in urls_list if url.strip()]
@@ -213,3 +216,61 @@ def update_sourcing_req_status(request):
             logging.error(f'unable to update: {str(e)}')
             messages.error(request, 'Please try again later!')
             return redirect('staff_sourcing_requests')
+        
+@role_required('Staff')
+@login_required(login_url='login')
+@never_cache
+def fetch_and_store_shopify_orders(request):
+    stores = Shop.objects.all()
+    
+    for store in stores:
+        try:
+            shopify_url = f"https://{store.shop_name}.myshopify.com/admin/api/2023-01/orders.json?fields=id,total_price,created_at,financial_status,fulfillment_status,line_items"
+            headers = {
+                'Content-Type': 'application/json',
+                'X-Shopify-Access-Token': store.access_token,
+            }
+            response = requests.get(shopify_url, headers=headers)
+            
+            if response.status_code == 200:
+                orders_data = response.json().get('orders', [])
+                for order_data in orders_data:
+                    order, created = ShopifyOrder.objects.update_or_create(
+                        order_id=order_data['id'],
+                        defaults={
+                            'total_price': order_data['total_price'],
+                            'created_at': order_data['created_at'],
+                            'payment_status': order_data.get('financial_status', ''),
+                            'fulfillment_status': order_data.get('fulfillment_status', ''),
+                            'shop':store,
+                        }
+                    )
+                    # Update or create order items
+                    for item_data in order_data.get('line_items', []):
+                        product = MyProducts.objects.filter(product__name=item_data['name']).first()
+                        ShopifyOrderItem.objects.update_or_create(
+                            order=order,
+                            product_name=item_data['name'],
+                            defaults={
+                                'product':product,
+                                'quantity': item_data['quantity'],
+                                'price': item_data['price'],
+                            }
+                        )
+                messages.success(request, f'Successfully fetched orders from {store.shop_name}!')
+            else:
+                logging.error(f"Failed to fetch orders for store {store.shop_name}: {response.content}")
+                messages.error(request, f"Failed to fetch orders for store {store.shop_name}!")
+
+        except Exception as e:
+            logging.error(f"Error fetching orders for store {store.shop_name}: {str(e)}")
+            messages.error(request, f"An error occurred while fetching orders for store {store.shop_name}!")
+    
+    return redirect('staff_orders')
+
+@role_required('Staff')
+@login_required(login_url='login')
+@never_cache
+def orders(request):
+    orders = ShopifyOrder.objects.prefetch_related('items').all()
+    return render(request, 'staff_panel/orders.html',{'orders':orders})

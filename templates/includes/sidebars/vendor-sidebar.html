@@ -1,0 +1,14 @@
+<div class="sidebar">
+    <div class="logo">
+        <h2>FulFillX</h2>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'vendor_dashboard' %}" class="nav-link"><img class="sidebar-img" src="/static/img/includes/vendor_sidebar/dashboard.png" alt="dashboard"><span>Dashboard</span></a></li>
+        <li><a href="{% url 'vendor_products' %}" class="nav-link"><img class="sidebar-img" src="/static/img/includes/vendor_sidebar/product.png" alt="products"><span>Products</span></a></li>
+        <li><a href="{% url 'vendor_orders' %}" class="nav-link"><img class="sidebar-img" src="/static/img/includes/vendor_sidebar/orders.png" alt="orders"><span>Orders</span></a></li>
+        <li><a href="#" class="nav-link"><img class="sidebar-img" src="/static/img/includes/vendor_sidebar/payment.png" alt="payments"><span>Payments</span></a></li>
+    </ul>
+    <div class="logout">
+        <a href="{% url 'logout' %}"><img class="sidebar-img" src="/static/img/includes/vendor_sidebar/logout.png" alt="logout"><span>Logout</span></a>
+    </div>
+</div>

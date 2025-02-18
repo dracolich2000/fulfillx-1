@@ -1,0 +1,16 @@
+<div class="sidebar">
+    <div class="logo">
+        <h2>FulFillX</h2>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'admin_dashboard' %}" class="nav-link" data-link="admin_dashboard"><img class="sidebar-img" src="/static/img/includes/admin-sidebar/dashboard.png" alt="dashboard"><span>Dashboard</span></a></li>
+        <li><a href="{% url 'admin_products' %}" class="nav-link" data-link="products"><img class="sidebar-img" src="/static/img/includes/admin-sidebar/product.png" alt="products"><span>Products</span></a></li>
+        <li><a href="{% url 'users' %}" class="nav-link" data-link="users"><img class="sidebar-img" src="/static/img/includes/admin-sidebar/users.png" alt="users"><span>Users</span></a></li>
+        <li><a href="{% url 'admin_orders' %}" class="nav-link" data-link="orders"><img class="sidebar-img" src="/static/img/includes/admin-sidebar/orders.png" alt="orders"><span>Orders</span></a></li>
+        <li><a href="{% url 'admin_sourcing_requests' %}" class="nav-link" data-link="sourcing"><img class="sidebar-img" src="/static/img/includes/admin-sidebar/sourcing.png" alt="sourcing"><span>Sourcing Requests</span></a></li>
+        <li><a href="#" class="nav-link" data-link="payments"><img class="sidebar-img" src="/static/img/includes/admin-sidebar/payment.png" alt="payments"><span>Payments</span></a></li>
+    </ul>
+    <div class="logout">
+        <a href="{% url 'logout' %}" class="nav-link" data-link="logout"><img class="sidebar-img" src="/static/img/includes/admin-sidebar/logout.png" alt="logout"><span>Logout</span></a>
+    </div>
+</div>

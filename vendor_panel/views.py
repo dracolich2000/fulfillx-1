@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from fulfillX.access_control_decorater import role_required
+from user_panel.models import ShopifyOrder
 
 # Create your views here.
 @role_required('Vendor')
@@ -38,3 +39,9 @@ def update_inventory(request):
         except:
             messages.error(request, 'Please try again!')
             return redirect('vendor_products')
+
+@role_required('Vendor')
+@login_required(login_url='login')
+@never_cache
+def orders(request):
+    return render(request, 'vendor_panel/orders.html',{'orders':orders})
