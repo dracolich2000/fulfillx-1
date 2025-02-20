@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from fulfillX.access_control_decorater import role_required
-from user_panel.models import ShopifyOrder
+from user_panel.models import ShopifyOrder, MyProducts
 
 # Create your views here.
 @role_required('Vendor')
@@ -44,4 +44,5 @@ def update_inventory(request):
 @login_required(login_url='login')
 @never_cache
 def orders(request):
+    orders = ShopifyOrder.objects.filter(items__product__vendor=request.user).distinct()
     return render(request, 'vendor_panel/orders.html',{'orders':orders})

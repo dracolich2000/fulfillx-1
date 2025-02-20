@@ -12,6 +12,7 @@ import requests
 from .models import Shop, ShopifyOrder, ShopifyOrderItem, MyProducts
 from django.core.exceptions import ObjectDoesNotExist
 import logging
+from authentication.models import StaffUser
 
 # Create your views here.
 @role_required('User')
@@ -235,6 +236,7 @@ def push_to_shopify(request):
             response_data = response.json()
             shopify_product_id = response_data['product']['id']
             
+            vendor = StaffUser.objects.get(username=product.vendor, role="Vendor")
             MyProducts.objects.create(
                 product=product,
                 fulfillx_price=product.price,
@@ -242,7 +244,8 @@ def push_to_shopify(request):
                 inventory=0,
                 shopify_product_id=shopify_product_id,
                 pushed_to_shopify=True,
-                shop=store
+                shop=store,
+                vendor=vendor
             )
             
             messages.success(request, "Product pushed to Shopify successfully!")

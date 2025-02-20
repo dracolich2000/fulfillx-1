@@ -37,16 +37,26 @@
         </thead>
         <tbody>
             {% for order in orders %}
+                {% for item in order.items.all %}
+                    <tr>
+                        {% if forloop.first %}
+                            <td rowspan="{{ order.items.count }}">{{ order.order_id }}</td>
+                        {% endif %}
+                        <td>{{ item.product_name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        {% if forloop.first %}
+                            <td rowspan="{{ order.items.count }}">{{ order.customer|default:"N/A" }}</td>
+                            <td rowspan="{{ order.items.count }}">${{ order.total_price }}</td>
+                            <td rowspan="{{ order.items.count }}">{{ order.created_at|date:"Y-m-d H:i" }}</td>
+                            <td rowspan="{{ order.items.count }}">{{ order.payment_status|default:"Pending" }}</td>
+                            <td rowspan="{{ order.items.count }}">{{ order.fulfillment_status|default:"Not Fulfilled" }}</td>
+                            <td rowspan="{{ order.items.count }}">{{ order.delivery_status|default:"Pending" }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% empty %}
                 <tr>
-                    <td>{{ order.order_id }}</td>
-                    <td>{{ item.product_name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ order.customer }}</td>
-                    <td>{{ order.total_price }}</td>
-                    <td>{{ order.created_at }}</td>
-                    <td>{{ order.payment_status }}</td>
-                    <td>{{ order.fulfillment_status }}</td>
-                    <td>{{ order.delivery_status }}</td>
+                    <td colspan="9">No orders found.</td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -38,3 +38,4 @@ class MyProducts(models.Model):
     shopify_product_id = models.CharField(max_length=255, blank=True, null=True)
     pushed_to_shopify = models.BooleanField(default=False)
     shop = models.ForeignKey('Shop', on_delete=models.CASCADE, blank=True,null=True)
+    vendor = models.ForeignKey('authentication.StaffUser', on_delete=models.SET_NULL, null=True, blank=True, related_name="products")
