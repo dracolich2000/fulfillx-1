@@ -28,6 +28,7 @@
                 <th>FulFillX Price</th>
                 <th>Selling Price</th>
                 <th>Inventory</th>
+                <th>Vendor</th>
             </tr>
         </thead>
         <tbody>
@@ -47,10 +48,11 @@
                 <td>{{product.fulfillx_price}}</td>
                 <td>{{product.selling_price}}</td>
                 <td>{{product.inventory}}</td>
+                <td>{{product.vendor.username}}</td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="6">No products found.</td>
+                <td colspan="7">No products found.</td>
             </tr>
             {% endfor %}
         </tbody>
