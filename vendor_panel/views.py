@@ -44,5 +44,5 @@ def update_inventory(request):
 @login_required(login_url='login')
 @never_cache
 def orders(request):
-    orders = ShopifyOrder.objects.filter(items__product__vendor=request.user).distinct()
+    orders = ShopifyOrder.objects.filter(items__product__vendor=request.user.username).distinct()
     return render(request, 'vendor_panel/orders.html',{'orders':orders})
