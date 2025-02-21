@@ -108,7 +108,7 @@ def upload_products_csv(request):
                         price=price,
                         category=category,
                         description=description,
-                        vendor=vendor_username,
+                        vendor=vendor,
                         created_by=request.user.username
                     )
                     urls_list = image_urls.replace('|', ',').replace(' ', ',').split(',')
