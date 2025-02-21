@@ -214,7 +214,7 @@ def push_to_shopify(request):
                 "product": {
                     "title": product.name,
                     "body_html": product.description,
-                    "vendor": product.vendor,
+                    "vendor": product.vendor.username,
                     "product_type": product.category,
                     "variants": [
                         {
