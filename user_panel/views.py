@@ -236,7 +236,7 @@ def push_to_shopify(request):
             response_data = response.json()
             shopify_product_id = response_data['product']['id']
             
-            vendor = StaffUser.objects.get(username=product.vendor, role="Vendor")
+            vendor = StaffUser.objects.get(username=product.vendor.username, role="Vendor")
             MyProducts.objects.create(
                 product=product,
                 fulfillx_price=product.price,

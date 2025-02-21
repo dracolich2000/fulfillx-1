@@ -1,5 +1,16 @@
 from django.db import models
 
+# store products pushed to shopify
+class MyProducts(models.Model):
+    product = models.OneToOneField('staff_panel.Products', on_delete=models.CASCADE, primary_key=True)
+    fulfillx_price = models.DecimalField(max_digits=10, decimal_places=2)
+    selling_price = models.DecimalField(max_digits=10, decimal_places=2)
+    inventory = models.IntegerField(default=0)
+    shopify_product_id = models.CharField(max_length=255, blank=True, null=True)
+    pushed_to_shopify = models.BooleanField(default=False)
+    shop = models.ForeignKey('Shop', on_delete=models.CASCADE, blank=True,null=True)
+    vendor = models.ForeignKey('authentication.StaffUser', on_delete=models.SET_NULL, null=True, blank=True, related_name="myProducts")
+
 # store shop data
 class Shop(models.Model): 
     id = models.AutoField(primary_key=True)
@@ -19,23 +30,13 @@ class ShopifyOrder(models.Model):
     payment_status = models.CharField(max_length=255, blank=True, null=True)
     fulfillment_status = models.CharField(max_length=255, blank=True, null=True)
     delivery_status = models.CharField(max_length=255, blank=True, null=True)
-    shop = models.ForeignKey('Shop', on_delete=models.SET_NULL, related_name='orders', null=True, blank=True)  # Link order to a shop
+    shop = models.ForeignKey('Shop', on_delete=models.SET_NULL, related_name='orders', null=True, blank=True)
 
 # store order items
 class ShopifyOrderItem(models.Model):
     order = models.ForeignKey(ShopifyOrder, related_name='items', on_delete=models.CASCADE)
-    product = models.ForeignKey('user_panel.MyProducts', on_delete=models.SET_NULL, null=True, blank=True)  # Preserve order if product is deleted
+    product = models.ForeignKey(MyProducts, on_delete=models.SET_NULL, null=True, blank=True)
     product_name = models.CharField(max_length=255)  # Store name to keep history
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
-# store products pushed to shopify
-class MyProducts(models.Model):
-    product = models.OneToOneField('staff_panel.Products', on_delete=models.CASCADE, primary_key=True)
-    fulfillx_price = models.DecimalField(max_digits=10, decimal_places=2)
-    selling_price = models.DecimalField(max_digits=10, decimal_places=2)
-    inventory = models.IntegerField(default=0)
-    shopify_product_id = models.CharField(max_length=255, blank=True, null=True)
-    pushed_to_shopify = models.BooleanField(default=False)
-    shop = models.ForeignKey('Shop', on_delete=models.CASCADE, blank=True,null=True)
-    vendor = models.ForeignKey('authentication.StaffUser', on_delete=models.SET_NULL, null=True, blank=True, related_name="products")

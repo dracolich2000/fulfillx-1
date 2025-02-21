@@ -1,4 +1,5 @@
 from django.db import models
+from authentication.models import StaffUser
 
 # Create your models here.
 class Products(models.Model):
@@ -11,7 +12,7 @@ class Products(models.Model):
     inventory = models.PositiveIntegerField(default=0)
     created_by = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    vendor = models.CharField(max_length=255, default='')
+    vendor = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True, related_name="products")
 
 class ProductImage(models.Model):
     image_url = models.URLField(max_length=255, blank=False, default='https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
