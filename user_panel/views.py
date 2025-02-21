@@ -190,7 +190,6 @@ def push_to_shopify(request):
         try:
             # Fetch the product based on product_id
             product = Products.objects.get(id=product_id)
-            print(product.vendor.username)
         except ObjectDoesNotExist:
             messages.error(request, "Product not found!")
             return redirect('find_products')

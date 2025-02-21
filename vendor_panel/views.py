@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from fulfillX.access_control_decorater import role_required
 from user_panel.models import ShopifyOrder, MyProducts
+from authentication.models import StaffUser
 
 # Create your views here.
 @role_required('Vendor')
@@ -17,7 +18,7 @@ def vendor_dashboard(request):
 @login_required(login_url='login')
 @never_cache
 def products(request):
-    vendor = request.user.username
+    vendor = StaffUser.objects.get(username=request.user.username)
     products = Products.objects.filter(vendor=vendor)
     return render(request, 'vendor_panel/products.html',{'products':products})
 
