@@ -252,9 +252,11 @@ def push_to_shopify(request):
                 messages.success(request, "Product pushed to Shopify successfully!")
             else:
                 error_msg = response.json()  # Get detailed error message from Shopify API
-        except:
-            messages.error(request, f"Failed to push product to Shopify! Error: {error_msg}")
-    
+                messages.error(request, f"Failed to push product to Shopify! Error: {error_msg}")
+
+        except Exception as e:
+            messages.error(request, f"Failed to push product to Shopify! Error: {error_msg}. Exception: {str(e)}")
+
     return redirect('find_products')
 
 @role_required('User')
