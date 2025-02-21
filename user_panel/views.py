@@ -201,56 +201,58 @@ def push_to_shopify(request):
             messages.error(request, "Shop not found!")
             return redirect('find_products')
         
-        # Prepare the product data for Shopify API
-        shopify_url = f"https://{store.shop_name}.myshopify.com/admin/api/2023-01/products.json"
-        headers = {
-            'Content-Type': 'application/json',
-            'X-Shopify-Access-Token': store.access_token,  # Ensure token has the correct permissions
-        }
-        
-        # Create the product data
-        product_data = {
-            "product": {
-                "title": product.name,
-                "body_html": product.description,
-                "vendor": product.vendor,
-                "product_type": product.category,
-                "variants": [
-                    {
-                        "price": product_price,
-                    }
-                ],
-                "images": [
-                    {
-                        "src": image.image_url  # Ensure the image URL is valid
-                    } for image in product.images.all()
-                ]
+        try:
+            # Prepare the product data for Shopify API
+            shopify_url = f"https://{store.shop_name}.myshopify.com/admin/api/2023-01/products.json"
+            headers = {
+                'Content-Type': 'application/json',
+                'X-Shopify-Access-Token': store.access_token,
             }
-        }
-
-        # Make the request to Shopify
-        response = requests.post(shopify_url, json=product_data, headers=headers)
-
-        # Handle response
-        if response.status_code == 201:
-            response_data = response.json()
-            shopify_product_id = response_data['product']['id']
             
-            vendor = StaffUser.objects.get(username=product.vendor.username, role="Vendor")
-            MyProducts.objects.create(
-                product=product,
-                fulfillx_price=product.price,
-                selling_price=product_price,
-                inventory=0,
-                shopify_product_id=shopify_product_id,
-                pushed_to_shopify=True,
-                shop=store,
-                vendor=vendor
-            )
-            
-            messages.success(request, "Product pushed to Shopify successfully!")
-        else:
-            error_msg = response.json()  # Get detailed error message from Shopify API
+            # Create the product data
+            product_data = {
+                "product": {
+                    "title": product.name,
+                    "body_html": product.description,
+                    "vendor": product.vendor,
+                    "product_type": product.category,
+                    "variants": [
+                        {
+                            "price": product_price,
+                        }
+                    ],
+                    "images": [
+                        {
+                            "src": image.image_url  # Ensure the image URL is valid
+                        } for image in product.images.all()
+                    ]
+                }
+            }
+
+            # Make the request to Shopify
+            response = requests.post(shopify_url, json=product_data, headers=headers)
+
+            # Handle response
+            if response.status_code == 201:
+                response_data = response.json()
+                shopify_product_id = response_data['product']['id']
+                
+                vendor = StaffUser.objects.get(username=product.vendor.username, role="Vendor")
+                MyProducts.objects.create(
+                    product=product,
+                    fulfillx_price=product.price,
+                    selling_price=product_price,
+                    inventory=0,
+                    shopify_product_id=shopify_product_id,
+                    pushed_to_shopify=True,
+                    shop=store,
+                    vendor=vendor.id
+                )
+                
+                messages.success(request, "Product pushed to Shopify successfully!")
+            else:
+                error_msg = response.json()  # Get detailed error message from Shopify API
+        except:
             messages.error(request, f"Failed to push product to Shopify! Error: {error_msg}")
     
     return redirect('find_products')
