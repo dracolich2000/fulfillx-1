@@ -46,5 +46,6 @@ def update_inventory(request):
 @never_cache
 def orders(request):
     vendor = StaffUser.objects.get(username=request.user.username)
-    orders = ShopifyOrder.objects.filter(items__product__vendor=vendor)
+    products = MyProducts.objects.filter(vendor=vendor)
+    orders = ShopifyOrder.objects.filter(items__product__in=products)
     return render(request, 'vendor_panel/orders.html',{'orders':orders})
